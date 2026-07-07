@@ -1,0 +1,634 @@
+<title>品勢 POOMSAE, 太極與黑帶的十七個故事</title>
+<style>
+:root{
+  --paper:#EDE6D6;
+  --paper-deep:#E2D8C0;
+  --paper-line:rgba(33,28,22,.14);
+  --ink:#211C16;
+  --ink-soft:#6b6353;
+  --red:#B23A2E;
+  --red-soft:rgba(178,58,46,.12);
+  --blue:#1D4E89;
+  --blue-soft:rgba(29,78,137,.12);
+  --gold:#A9822F;
+  --font-display:"DFKai-SB","BiauKai","Kaiti TC","Kaiti SC","Noto Serif TC",serif;
+  --font-body:"Microsoft JhengHei","PingFang TC","Heiti TC","Noto Sans TC",sans-serif;
+  --font-mono:"Consolas","SFMono-Regular",Menlo,monospace;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--font-body);
+  line-height:1.9;
+  font-size:16px;
+  -webkit-font-smoothing:antialiased;
+  position:relative;
+  overflow-x:hidden;
+}
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.13 0 0 0 0 0.11 0 0 0 0 0.09 0 0 0 0.55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:220px 220px;
+  opacity:.4;
+  mix-blend-mode:multiply;
+  pointer-events:none;
+  z-index:5;
+}
+img,svg{display:block;max-width:100%;}
+button{font:inherit;}
+a{color:var(--red);}
+:focus-visible{outline:2px solid var(--red);outline-offset:3px;}
+
+.wrap{max-width:980px;margin:0 auto;padding:0 clamp(20px,5vw,56px);}
+
+/* 進度帶 */
+#beltbar{
+  position:fixed;top:0;left:0;height:5px;width:100%;
+  background:var(--paper-line);z-index:60;
+}
+#beltbar i{
+  display:block;height:100%;width:0%;
+  background:linear-gradient(90deg,#f5f2e8 0%,#e3c53f 20%,#3f8b46 40%,#2054a1 60%,#b23a2e 80%,#1a1611 100%);
+  transition:width .08s linear;
+}
+
+/* 章節共用 */
+section{position:relative;z-index:2;padding:clamp(64px,10vw,120px) 0;}
+.eyebrow{
+  font-family:var(--font-mono);
+  font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--ink-soft);margin:0 0 14px;
+}
+h2.head{
+  font-family:var(--font-display);
+  font-weight:700;
+  font-size:clamp(1.7rem,4vw,2.6rem);
+  margin:0 0 22px;
+  letter-spacing:.02em;
+}
+p.lead{
+  max-width:56ch;font-size:1.05rem;color:var(--ink);
+}
+.stamp-note{
+  max-width:56ch;color:var(--ink-soft);font-size:.95rem;
+  border-left:3px solid var(--red);padding-left:16px;margin-top:26px;
+}
+
+/* 手繪分隔線 */
+.divider{width:100%;height:34px;margin:0 auto;overflow:visible;}
+.divider path{
+  fill:none;stroke:var(--ink);stroke-width:1.4;stroke-linecap:round;
+  stroke-dasharray:900;stroke-dashoffset:900;
+  transition:stroke-dashoffset 1.4s ease;
+}
+.divider.drawn path{stroke-dashoffset:0;}
+
+/* HERO */
+#hero{
+  min-height:100svh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding-top:96px;
+}
+.tag-row{display:flex;gap:10px;margin-bottom:30px;}
+.tag-pill{
+  border:1px solid var(--ink);border-radius:999px;
+  padding:5px 16px;font-family:var(--font-mono);
+  font-size:.68rem;letter-spacing:.18em;color:var(--ink-soft);
+}
+.crest{width:clamp(120px,20vw,190px);height:auto;margin-bottom:8px;}
+.spin{transform-box:fill-box;transform-origin:center;}
+.crest .spin{animation:spin 46s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+h1.title{
+  font-family:var(--font-display);font-weight:700;
+  font-size:clamp(3.2rem,11vw,6.4rem);
+  margin:6px 0 0;line-height:1;
+}
+.subtitle{
+  font-family:var(--font-mono);letter-spacing:.5em;
+  font-size:.85rem;color:var(--ink-soft);margin:14px 4px 0 8px;
+}
+#hero p.lead{margin:30px auto 0;}
+.scrollcue{
+  margin-top:56px;font-family:var(--font-mono);font-size:.72rem;
+  color:var(--ink-soft);letter-spacing:.1em;
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+}
+.scrollcue span.arrow{animation:bob 1.8s ease-in-out infinite;}
+@keyframes bob{0%,100%{transform:translateY(0);}50%{transform:translateY(7px);}}
+
+/* INTRO */
+.intro-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:48px;align-items:start;}
+.step-cards{display:flex;flex-direction:column;gap:16px;}
+.step-card{
+  border:1px solid var(--paper-line);background:var(--paper-deep);
+  padding:18px 20px;border-radius:2px;text-decoration:none;color:var(--ink);
+  display:block;transition:transform .25s ease,box-shadow .25s ease;
+}
+.step-card:hover{transform:translateX(4px);box-shadow:0 10px 24px -16px rgba(33,28,22,.5);}
+.step-card b.num{
+  font-family:var(--font-display);color:var(--red);font-size:1.4rem;margin-right:10px;
+}
+.step-card .st-title{font-weight:700;font-family:var(--font-display);font-size:1.15rem;}
+.step-card .st-desc{color:var(--ink-soft);font-size:.88rem;margin-top:4px;}
+
+/* 太極 WHEEL */
+#taegeuk .layout{display:grid;grid-template-columns:minmax(280px,420px) 1fr;gap:44px;align-items:start;}
+.bagua{
+  position:relative;width:100%;aspect-ratio:1/1;max-width:420px;margin:0 auto;
+}
+.bagua-spokes{position:absolute;inset:0;width:100%;height:100%;}
+.bagua-spokes line{stroke:var(--ink-soft);stroke-width:.5;opacity:.5;stroke-dasharray:2 3;}
+.bagua-core{
+  position:absolute;left:50%;top:50%;width:34%;height:34%;
+  transform:translate(-50%,-50%);
+  animation:breathe 6s ease-in-out infinite;
+}
+@keyframes breathe{0%,100%{transform:translate(-50%,-50%) scale(1);}50%{transform:translate(-50%,-50%) scale(1.035);}}
+.bagua-core svg{width:100%;height:100%;}
+.tg-a{fill:var(--red);}
+.tg-b{fill:var(--blue);}
+.bagua-core .spin{animation:spin 60s linear infinite;}
+.bagua-node{
+  position:absolute;width:clamp(48px,13%,68px);height:clamp(48px,13%,68px);
+  left:var(--x);top:var(--y);transform:translate(-50%,-50%);
+  border-radius:50%;border:1.4px solid var(--ink);
+  background:var(--paper);cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:0;transition:transform .25s ease,background .25s ease,box-shadow .25s ease;
+  color:var(--ink);
+}
+.bagua-node .glyph{font-size:clamp(1.1rem,3.4vw,1.6rem);line-height:1;}
+.bagua-node .hanzi{font-family:var(--font-display);font-size:.62rem;margin-top:1px;}
+.bagua-node:hover{transform:translate(-50%,-50%) scale(1.08);}
+.bagua-node[aria-pressed="true"]{
+  background:var(--red);color:var(--paper);border-color:var(--red);
+  box-shadow:0 8px 20px -10px rgba(178,58,46,.6);
+}
+.bagua-panel{
+  border:1px solid var(--paper-line);background:var(--paper-deep);
+  padding:clamp(22px,3.6vw,34px);border-radius:2px;min-height:300px;
+}
+.bagua-panel .pn-in{opacity:0;transform:translateY(8px);transition:opacity .3s ease,transform .3s ease;}
+.bagua-panel .pn-in.show{opacity:1;transform:translateY(0);}
+.pn-eyebrow{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.15em;color:var(--ink-soft);}
+.pn-title{font-family:var(--font-display);font-size:2rem;font-weight:700;margin:6px 0 2px;}
+.pn-sub{color:var(--ink-soft);font-size:.85rem;margin-bottom:18px;}
+.pn-row{margin-bottom:16px;}
+.pn-row .k{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.1em;color:var(--red);display:block;margin-bottom:4px;}
+.pn-quote{
+  margin-top:22px;padding-left:16px;border-left:3px solid var(--blue);
+  font-family:var(--font-display);font-size:1.05rem;color:var(--blue);
+}
+.fact-box{
+  margin-top:36px;padding:18px 20px;background:var(--paper-deep);
+  border:1px dashed var(--ink-soft);font-size:.92rem;color:var(--ink-soft);
+  max-width:640px;
+}
+
+/* 黑帶山水 */
+.ridge-wrap{position:relative;width:100%;aspect-ratio:900/300;margin:20px 0 30px;overflow:hidden;}
+.ridge-wrap svg{position:absolute;inset:0;width:100%;height:100%;}
+.ridge-back{opacity:.14;}
+.ridge-mid{opacity:.22;}
+.ridge-front{opacity:.95;}
+.mist{
+  position:absolute;right:0;top:0;bottom:0;width:22%;
+  background:linear-gradient(90deg,rgba(237,230,214,0) 0%,var(--paper) 92%);
+}
+.peak-mark{
+  position:absolute;transform:translate(-50%,-50%);
+  width:11px;height:11px;border-radius:50%;background:var(--red);
+  border:2px solid var(--paper);cursor:pointer;
+}
+.peak-mark span{
+  position:absolute;top:16px;left:50%;transform:translateX(-50%);
+  white-space:nowrap;font-family:var(--font-display);font-size:.78rem;
+  color:var(--ink-soft);
+}
+.dan-list{display:flex;flex-direction:column;gap:10px;}
+details.dan-card{
+  border:1px solid var(--paper-line);background:var(--paper-deep);
+  padding:0;border-radius:2px;
+}
+details.dan-card summary{
+  list-style:none;cursor:pointer;padding:16px 20px;
+  display:flex;align-items:center;gap:16px;
+}
+details.dan-card summary::-webkit-details-marker{display:none;}
+.dan-badge{
+  flex:0 0 auto;width:38px;height:38px;border-radius:50%;
+  border:1.4px solid var(--ink);display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-mono);font-size:.78rem;
+}
+.dan-name{font-family:var(--font-display);font-size:1.25rem;font-weight:700;}
+.dan-hangul{color:var(--ink-soft);font-size:.82rem;margin-left:6px;}
+.dan-chevron{margin-left:auto;transition:transform .3s ease;color:var(--ink-soft);}
+details[open] .dan-chevron{transform:rotate(180deg);}
+.dan-body{padding:0 20px 22px 74px;}
+.dan-body p{margin:0 0 12px;color:var(--ink);}
+.dan-body .quote{
+  border-left:3px solid var(--blue);padding-left:14px;color:var(--blue);
+  font-family:var(--font-display);
+}
+
+/* 練習建議 */
+.breathe-wrap{display:flex;align-items:center;gap:34px;flex-wrap:wrap;margin-top:30px;}
+.breath-circle{
+  width:100px;height:100px;border-radius:50%;
+  border:1.4px solid var(--ink);position:relative;flex:0 0 auto;
+}
+.breath-circle i{
+  position:absolute;inset:14%;border-radius:50%;
+  background:var(--red-soft);border:1px solid var(--red);
+  animation:breathcycle 8s ease-in-out infinite;
+}
+@keyframes breathcycle{
+  0%,100%{transform:scale(.6);opacity:.5;}
+  50%{transform:scale(1);opacity:.9;}
+}
+.breath-label{font-family:var(--font-mono);font-size:.72rem;color:var(--ink-soft);letter-spacing:.1em;}
+
+/* footer */
+footer{padding:60px 0 90px;text-align:center;}
+.seal{
+  width:74px;height:74px;margin:0 auto 20px;border:2px solid var(--red);
+  color:var(--red);display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-display);font-size:1.3rem;transform:rotate(-6deg);
+  writing-mode:vertical-rl;
+}
+footer p{color:var(--ink-soft);font-size:.82rem;max-width:52ch;margin:0 auto;}
+
+@media (max-width:860px){
+  .intro-grid,#taegeuk .layout{grid-template-columns:1fr;}
+  .dan-body{padding-left:20px;}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important;}
+}
+</style>
+
+<div id="beltbar"><i id="beltfill"></i></div>
+
+<section id="hero">
+  <div class="tag-row">
+    <span class="tag-pill">WORLD TAEKWONDO</span>
+    <span class="tag-pill">KUKKIWON</span>
+  </div>
+  <svg class="crest" viewBox="0 0 200 200" aria-hidden="true">
+    <circle cx="100" cy="100" r="98" fill="var(--paper)" stroke="var(--ink)" stroke-width="2"/>
+    <g class="spin">
+      <path class="tg-a" d="M100,0a50,50 0 0,1 0,100 50,50 0 0,0 0,100 100,100 0 0,0 0,-200z"/>
+      <path class="tg-b" d="M100,0a50,50 0 0,0 0,100 50,50 0 0,1 0,100 100,100 0 0,1 0,-200z"/>
+    </g>
+    <circle cx="100" cy="100" r="98" fill="none" stroke="var(--ink)" stroke-width="2"/>
+  </svg>
+  <h1 class="title">品勢</h1>
+  <div class="subtitle">P O O M S A E</div>
+  <p class="lead">十七套動作, 十七種心法, 記錄了一位習武者從入門到黑帶的完整旅程.</p>
+  <div class="scrollcue"><span>向下捲動, 從太極開始</span><span class="arrow">▾</span></div>
+</section>
+
+<section id="intro">
+  <div class="wrap">
+    <p class="eyebrow">品勢是什麼</p>
+    <h2 class="head">把攻防與心法, 練成一套能重複的動作</h2>
+    <div class="intro-grid">
+      <div>
+        <p class="lead">
+          品勢 (Poomsae, 품새) 是跆拳道中, 將各種攻防技術依固定順序串連而成的套路練習, 用來訓練姿勢正確性, 力量控制, 呼吸節奏與精神專注.
+        </p>
+        <p class="lead">
+          世界跆拳道總會 (World Taekwondo, WT) 與國技院 (Kukkiwon) 所採用的品勢系統, 分成兩個階段: 有色帶學員練習的太極品勢, 以及黑帶學員練習的黑帶品勢.
+        </p>
+      </div>
+      <div class="step-cards">
+        <a class="step-card" href="#taegeuk">
+          <span><b class="num">八</b><span class="st-title">太極品勢</span></span>
+          <div class="st-desc">有色帶練習, 一場到八場, 每一場對應易經一卦</div>
+        </a>
+        <a class="step-card" href="#yudanja">
+          <span><b class="num">九</b><span class="st-title">黑帶品勢</span></span>
+          <div class="st-desc">黑帶練習, 一段到九段, 從剛毅武士走到物我兩忘</div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<svg class="divider" viewBox="0 0 900 34" preserveAspectRatio="none"><path d="M0,20 C150,4 250,32 400,18 C550,4 650,30 900,14"/></svg>
+
+<section id="taegeuk">
+  <div class="wrap">
+    <p class="eyebrow">太極品勢 TAEGEUK POOMSAE</p>
+    <h2 class="head">一場到八場, 走過易經八卦</h2>
+    <p class="lead">
+      太極品勢是現行系統中, 供白帶到紅黑帶等有色帶學員練習的套路, 每一場動作, 都對應易經八卦中的一卦, 象徵一種自然現象與心性. 點選右側任一卦象, 看看它對應哪一場太極品勢.
+    </p>
+
+    <div class="layout" style="margin-top:40px;">
+      <div class="bagua" id="baguaWheel">
+        <svg class="bagua-spokes" viewBox="0 0 100 100" aria-hidden="true">
+          <line x1="50" y1="50" x2="50" y2="12"/>
+          <line x1="50" y1="50" x2="76.8" y2="23.2"/>
+          <line x1="50" y1="50" x2="88" y2="50"/>
+          <line x1="50" y1="50" x2="76.8" y2="76.8"/>
+          <line x1="50" y1="50" x2="50" y2="88"/>
+          <line x1="50" y1="50" x2="23.2" y2="76.8"/>
+          <line x1="50" y1="50" x2="12" y2="50"/>
+          <line x1="50" y1="50" x2="23.2" y2="23.2"/>
+        </svg>
+        <div class="bagua-core" aria-hidden="true">
+          <svg viewBox="0 0 200 200">
+            <circle cx="100" cy="100" r="98" fill="var(--paper)"/>
+            <g class="spin">
+              <path class="tg-a" d="M100,0a50,50 0 0,1 0,100 50,50 0 0,0 0,100 100,100 0 0,0 0,-200z"/>
+              <path class="tg-b" d="M100,0a50,50 0 0,0 0,100 50,50 0 0,1 0,100 100,100 0 0,1 0,-200z"/>
+            </g>
+            <circle cx="100" cy="100" r="98" fill="none" stroke="var(--ink)" stroke-width="3"/>
+          </svg>
+        </div>
+        <!-- 8 個節點由 JS 產生 -->
+      </div>
+
+      <div class="bagua-panel" id="baguaPanel" aria-live="polite"></div>
+    </div>
+
+    <div class="fact-box">
+      韓國國旗四角, 畫著乾, 坤, 坎, 離四卦; 太極品勢把剩下的兌, 震, 巽, 艮也編進了修行的路上, 補滿了完整的八卦.
+    </div>
+  </div>
+</section>
+
+<svg class="divider" viewBox="0 0 900 34" preserveAspectRatio="none"><path d="M0,14 C200,30 300,2 450,16 C600,30 700,4 900,20"/></svg>
+
+<section id="yudanja">
+  <div class="wrap">
+    <p class="eyebrow">黑帶品勢 YUDANJA POOMSAE</p>
+    <h2 class="head">一段到九段, 一場穿越山水的修行</h2>
+    <p class="lead">
+      黑帶品勢共有九套, 不再對應八卦, 而是各自擁有專屬的哲學意涵, 從高麗的剛毅, 金剛的堅定, 太白的神聖, 一路走到一如的物我兩忘. 點選任一山峰或標題, 展開它的故事.
+    </p>
+
+    <div class="ridge-wrap" id="ridgeWrap">
+      <svg class="ridge-back" viewBox="0 0 900 300" preserveAspectRatio="none">
+        <path fill="var(--ink)" d="M0,220 C120,180 220,210 320,160 C420,120 520,190 620,150 C720,110 820,180 900,140 L900,300 L0,300 Z"/>
+      </svg>
+      <svg class="ridge-mid" viewBox="0 0 900 300" preserveAspectRatio="none">
+        <path fill="var(--ink)" d="M0,240 C150,200 260,235 350,190 C460,145 560,220 660,180 C760,140 830,205 900,175 L900,300 L0,300 Z"/>
+      </svg>
+      <svg class="ridge-front" viewBox="0 0 900 300" preserveAspectRatio="none">
+        <path fill="var(--ink)" d="M40,280 L40,200.5 L142.5,141 L245,107 L347.5,239.6 L450,183.5 L552.5,166.5 L655,115.5 L757.5,229.4 L860,209 L860,280 Z"/>
+      </svg>
+      <div class="mist"></div>
+      <div class="peak-mark" data-target="dan-1" style="left:4.44%;top:69.42%"><span>高麗</span></div>
+      <div class="peak-mark" data-target="dan-2" style="left:15.83%;top:46.54%"><span>金剛</span></div>
+      <div class="peak-mark" data-target="dan-3" style="left:27.22%;top:33.46%"><span>太白</span></div>
+      <div class="peak-mark" data-target="dan-4" style="left:38.61%;top:84.46%"><span>平原</span></div>
+      <div class="peak-mark" data-target="dan-5" style="left:50%;top:62.88%"><span>十進</span></div>
+      <div class="peak-mark" data-target="dan-6" style="left:61.39%;top:56.35%"><span>地跆</span></div>
+      <div class="peak-mark" data-target="dan-7" style="left:72.78%;top:36.73%"><span>天拳</span></div>
+      <div class="peak-mark" data-target="dan-8" style="left:84.17%;top:80.54%"><span>漢水</span></div>
+      <div class="peak-mark" data-target="dan-9" style="left:95.56%;top:72.69%"><span>一如</span></div>
+    </div>
+
+    <div class="dan-list" id="danList">
+      <details class="dan-card" id="dan-1">
+        <summary>
+          <span class="dan-badge">一段</span>
+          <span><span class="dan-name">高麗</span><span class="dan-hangul">고려</span></span>
+          <span class="dan-chevron">▾</span>
+        </summary>
+        <div class="dan-body">
+          <p>象徵古代高麗武士剛毅不屈的精神, 動作中出現的直線與轉身代表士人的堅定意志.</p>
+          <p class="quote">心堅如鐵, 縱遇萬難亦不改其志</p>
+        </div>
+      </details>
+      <details class="dan-card" id="dan-2">
+        <summary>
+          <span class="dan-badge">二段</span>
+          <span><span class="dan-name">金剛</span><span class="dan-hangul">금강</span></span>
+          <span class="dan-chevron">▾</span>
+        </summary>
+        <div class="dan-body">
+          <p>取名自韓國金剛山, 象徵堅硬如金剛石般不可摧毀的力量與德行.</p>
+          <p class="quote">德如金剛, 歷經千錘而愈顯其堅</p>
+        </div>
+      </details>
+      <details class="dan-card" id="dan-3">
+        <summary>
+          <span class="dan-badge">三段</span>
+          <span><span class="dan-name">太白</span><span class="dan-hangul">태백</span></span>
+          <span class="dan-chevron">▾</span>
+        </summary>
+        <div class="dan-body">
+          <p>取名自太白山 (韓國人視為聖山), 象徵韓民族之根源與神聖.</p>
+          <p class="quote">根深者葉茂, 源遠者流長</p>
+        </div>
+      </details>
+      <details class="dan-card" id="dan-4">
+        <summary>
+          <span class="dan-badge">四段</span>
+          <span><span class="dan-name">平原</span><span class="dan-hangul">평원</span></span>
+          <span class="dan-chevron">▾</span>
+        </summary>
+        <div class="dan-body">
+          <p>象徵遼闊的平原, 代表包容萬物的度量與生生不息的力量.</p>
+          <p class="quote">地闊能容萬物, 心寬方能致遠</p>
+        </div>
+      </details>
+      <details class="dan-card" id="dan-5">
+        <summary>
+          <span class="dan-badge">五段</span>
+          <span><span class="dan-name">十進</span><span class="dan-hangul">십진</span></span>
+          <span class="dan-chevron">▾</span>
+        </summary>
+        <div class="dan-body">
+          <p>十為完整之數, 象徵萬物依十進位持續發展成長.</p>
+          <p class="quote">積小成大, 循序漸進, 終至圓滿</p>
+        </div>
+      </details>
+      <details class="dan-card" id="dan-6">
+        <summary>
+          <span class="dan-badge">六段</span>
+          <span><span class="dan-name">地跆</span><span class="dan-hangul">지태</span></span>
+          <span class="dan-chevron">▾</span>
+        </summary>
+        <div class="dan-body">
+          <p>象徵人類立於天地之間, 探索自我存在的意義.</p>
+          <p class="quote">立於天地之間, 方知修行之本在己</p>
+        </div>
+      </details>
+      <details class="dan-card" id="dan-7">
+        <summary>
+          <span class="dan-badge">七段</span>
+          <span><span class="dan-name">天拳</span><span class="dan-hangul">천권</span></span>
+          <span class="dan-chevron">▾</span>
+        </summary>
+        <div class="dan-body">
+          <p>象徵天的權威與威嚴, 表現對宇宙秩序的敬畏.</p>
+          <p class="quote">敬天者謙, 畏道者正</p>
+        </div>
+      </details>
+      <details class="dan-card" id="dan-8">
+        <summary>
+          <span class="dan-badge">八段</span>
+          <span><span class="dan-name">漢水</span><span class="dan-hangul">한수</span></span>
+          <span class="dan-chevron">▾</span>
+        </summary>
+        <div class="dan-body">
+          <p>取意於水, 象徵柔軟卻能包容且擁有無窮變化的力量.</p>
+          <p class="quote">上善若水, 柔而能克剛</p>
+        </div>
+      </details>
+      <details class="dan-card" id="dan-9">
+        <summary>
+          <span class="dan-badge">九段</span>
+          <span><span class="dan-name">一如</span><span class="dan-hangul">일여</span></span>
+          <span class="dan-chevron">▾</span>
+        </summary>
+        <div class="dan-body">
+          <p>源自佛教 "一如" 概念, 象徵身心合一, 物我兩忘的境界, 是品勢修習的最高層次.</p>
+          <p class="quote">形神合一, 動靜歸一, 是為一如</p>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<svg class="divider" viewBox="0 0 900 34" preserveAspectRatio="none"><path d="M0,18 C180,2 320,32 480,16 C640,2 760,30 900,16"/></svg>
+
+<section id="footnote">
+  <div class="wrap">
+    <p class="eyebrow">小知識</p>
+    <p class="stamp-note">
+      在太極品勢於 1970 年代成為官方標準之前, 曾經有另一套依易經八卦命名的八卦品勢, 同樣是八套. 如今多數道館已不再使用它作為晉級標準, 但仍偶爾出現在歷史教材或研究資料中.
+    </p>
+  </div>
+</section>
+
+<section id="practice">
+  <div class="wrap">
+    <p class="eyebrow">練習建議</p>
+    <h2 class="head">動作之外, 記得回到呼吸</h2>
+    <p class="lead">
+      品勢的學習, 除了記憶動作順序, 更重要的是理解每一個動作背後的攻防意義, 也就是分解動作 (Boonhae), 並且配合呼吸與重心轉換, 才能真正體現品勢背後的心法.
+    </p>
+    <div class="breathe-wrap">
+      <div class="breath-circle" aria-hidden="true"><i></i></div>
+      <div class="breath-label">吸氣 4 秒, 停留 1 秒, 吐氣 3 秒, 收心</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="seal">品勢</div>
+  <p>本頁資料整理自 WT 與國技院公開教材, 並融合實務詮釋. 勵志語錄與部分延伸內容為原創撰寫, 僅供學習參考, 非官方文獻.</p>
+</footer>
+
+<script>
+(function(){
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  var beltfill = document.getElementById("beltfill");
+  function onScroll(){
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    var pct = max > 0 ? (h.scrollTop || document.body.scrollTop) / max * 100 : 0;
+    beltfill.style.width = pct + "%";
+  }
+  document.addEventListener("scroll", onScroll, {passive:true});
+  onScroll();
+
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add("drawn"); io.unobserve(e.target); }
+    });
+  }, {threshold:.4});
+  document.querySelectorAll(".divider").forEach(function(el){ io.observe(el); });
+
+  var TAEGEUK = [
+    {glyph:"☰",hanzi:"乾",trig:"天, 光明",concept:"跆拳道最基本的動作組合, 強調前踢與直拳等入門技術.",quote:"光明磊落, 志存高遠"},
+    {glyph:"☱",hanzi:"兌",trig:"澤, 喜悅",concept:"動作中內含平靜與柔和之意, 但外柔內剛.",quote:"心懷喜悅, 外柔內剛"},
+    {glyph:"☲",hanzi:"離",trig:"火, 光與熱",concept:"動作節奏轉為明快, 開始出現連續技術.",quote:"熱忱如火, 照亮前路"},
+    {glyph:"☳",hanzi:"震",trig:"雷",concept:"象徵力量與威嚴, 動作幅度與爆發力增加.",quote:"一鳴驚人, 威震四方"},
+    {glyph:"☴",hanzi:"巽",trig:"風",concept:"強調如風一般可柔可剛, 動作中加入肘擊等技術.",quote:"剛柔並濟, 應變而不失其本"},
+    {glyph:"☵",hanzi:"坎",trig:"水",concept:"象徵水流不絕, 動作連貫且開始出現跳躍技術.",quote:"水滴石穿, 持之以恆"},
+    {glyph:"☶",hanzi:"艮",trig:"山",concept:"象徵沉穩厚重, 步法與馬步的穩定性要求提高.",quote:"穩如泰山, 不動如山"},
+    {glyph:"☷",hanzi:"坤",trig:"地, 萬物之母",concept:"集前七場技術之大成, 是晉升黑帶前的最後一套品勢.",quote:"厚德載物, 有容乃大"}
+  ];
+  var POS = [
+    ["50%","12%"],["76.8%","23.2%"],["88%","50%"],["76.8%","76.8%"],
+    ["50%","88%"],["23.2%","76.8%"],["12%","50%"],["23.2%","23.2%"]
+  ];
+
+  var wheel = document.getElementById("baguaWheel");
+  var panel = document.getElementById("baguaPanel");
+  var nodes = [];
+
+  TAEGEUK.forEach(function(t,i){
+    var b = document.createElement("button");
+    b.className = "bagua-node";
+    b.style.setProperty("--x", POS[i][0]);
+    b.style.setProperty("--y", POS[i][1]);
+    b.setAttribute("aria-pressed", i===0 ? "true":"false");
+    b.setAttribute("aria-label","太極"+(i+1)+"場, "+t.hanzi+"卦");
+    b.innerHTML = '<span class="glyph">'+t.glyph+'</span><span class="hanzi">'+t.hanzi+'</span>';
+    b.addEventListener("click", function(){ selectTaegeuk(i); });
+    wheel.appendChild(b);
+    nodes.push(b);
+  });
+
+  var ORDINAL = ["一","二","三","四","五","六","七","八"];
+  function renderPanel(i){
+    var t = TAEGEUK[i];
+    panel.innerHTML =
+      '<div class="pn-in">' +
+        '<p class="pn-eyebrow">TAEGEUK '+(i+1)+'</p>' +
+        '<p class="pn-title">太極'+ORDINAL[i]+'場</p>' +
+        '<p class="pn-sub">'+t.glyph+' '+t.hanzi+' 卦</p>' +
+        '<div class="pn-row"><span class="k">卦象意涵</span>'+t.trig+'</div>' +
+        '<div class="pn-row"><span class="k">動作核心概念</span>'+t.concept+'</div>' +
+        '<p class="pn-quote">'+t.quote+'</p>' +
+      '</div>';
+    requestAnimationFrame(function(){
+      panel.querySelector(".pn-in").classList.add("show");
+    });
+  }
+  function selectTaegeuk(i){
+    nodes.forEach(function(n,ix){ n.setAttribute("aria-pressed", ix===i ? "true":"false"); });
+    renderPanel(i);
+  }
+  selectTaegeuk(0);
+
+  document.querySelectorAll(".peak-mark").forEach(function(mark){
+    mark.addEventListener("click", function(){
+      var id = mark.getAttribute("data-target");
+      var d = document.getElementById(id);
+      if(!d) return;
+      document.querySelectorAll("#danList details").forEach(function(o){ if(o!==d) o.open=false; });
+      d.open = true;
+      d.scrollIntoView({behavior: reduce ? "auto":"smooth", block:"center"});
+    });
+  });
+
+  if(!reduce){
+    var ridge = document.getElementById("ridgeWrap");
+    var back = ridge.querySelector(".ridge-back");
+    var mid = ridge.querySelector(".ridge-mid");
+    window.addEventListener("scroll", function(){
+      var r = ridge.getBoundingClientRect();
+      var vh = window.innerHeight;
+      if(r.bottom < 0 || r.top > vh) return;
+      var progress = (vh - r.top) / (vh + r.height);
+      back.style.transform = "translateX(" + (progress*-14) + "px)";
+      mid.style.transform = "translateX(" + (progress*-26) + "px)";
+    }, {passive:true});
+  }
+})();
+</script>
